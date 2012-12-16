@@ -1,6 +1,8 @@
 package jsonit.json;
 
-public interface Buildable<T extends JsonValue<?>> {
+import jsonit.json.JsonValue.JsonStructure;
+
+public interface Buildable<T extends JsonStructure<?>> {
 
     T build();
 }

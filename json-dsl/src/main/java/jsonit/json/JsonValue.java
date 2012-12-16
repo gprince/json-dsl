@@ -41,6 +41,9 @@ public interface JsonValue<T> {
      */
     interface JsonStructure<T> extends Iterable<T> {
 
+        void add(Object object);
+
+        void add(Array array);
     }
 
     /**
@@ -283,6 +286,16 @@ public interface JsonValue<T> {
         @Override
         public Iterator<JsonValue<?>> iterator() {
             return this.value.iterator();
+        }
+
+        @Override
+        public void add(Object object) {
+            this.value.add(object);
+        }
+
+        @Override
+        public void add(Array array) {
+            this.value.add(array);
         }
     }
 
@@ -616,8 +629,18 @@ public interface JsonValue<T> {
          * @param value
          *            the member value
          */
-        public void member(java.lang.String name, JsonValue<?> value) {
+        public void add(java.lang.String name, JsonValue<?> value) {
             this.value.add(new Member(name, value));
+        }
+
+        @Override
+        public void add(Object object) {
+            this.value.add(new Member(object.getName(), object));
+        }
+
+        @Override
+        public void add(Array array) {
+            
         }
 
         /**
