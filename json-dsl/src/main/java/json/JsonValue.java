@@ -1,4 +1,4 @@
-package jsonit.json;
+package json;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,10 +40,7 @@ public interface JsonValue<T> {
      * 
      */
     interface JsonStructure<T> extends Iterable<T> {
-
-        void add(Object object);
-
-        void add(Array array);
+        
     }
 
     /**
@@ -286,16 +283,6 @@ public interface JsonValue<T> {
         @Override
         public Iterator<JsonValue<?>> iterator() {
             return this.value.iterator();
-        }
-
-        @Override
-        public void add(Object object) {
-            this.value.add(object);
-        }
-
-        @Override
-        public void add(Array array) {
-            this.value.add(array);
         }
     }
 
@@ -612,14 +599,11 @@ public interface JsonValue<T> {
         /**
          * Default constructor
          * 
-         * @param value
-         *            The held value
          * @throws IllegalArgumentException
          *             if the value parameter is null
          */
-        public Object(java.lang.String name) {
+        public Object() {
             super(new ArrayList<Member>());
-            this.name = name;
         }
 
         /**
@@ -633,16 +617,6 @@ public interface JsonValue<T> {
             this.value.add(new Member(name, value));
         }
 
-        @Override
-        public void add(Object object) {
-            this.value.add(new Member(object.getName(), object));
-        }
-
-        @Override
-        public void add(Array array) {
-            
-        }
-
         /**
          * Returns an iterator over the members in this Object (in proper
          * sequence).
@@ -650,15 +624,6 @@ public interface JsonValue<T> {
         @Override
         public Iterator<Member> iterator() {
             return this.value.iterator();
-        }
-
-        /**
-         * Returns the name of this object
-         * 
-         * @return The name of this object
-         */
-        public java.lang.String getName() {
-            return name;
         }
 
         /**
@@ -677,11 +642,6 @@ public interface JsonValue<T> {
             }
             return builder.toString();
         }
-
-        /**
-         * The object name
-         */
-        private java.lang.String name;
 
         /**
          * To String Style for Object
