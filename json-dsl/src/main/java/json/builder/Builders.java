@@ -311,7 +311,7 @@ public final class Builders {
 		// ---------- ---------- ----------
 
 		@SuppressWarnings("rawtypes")
-		protected T end() {
+		private T end() {
 			// The parent builder
 			T parentBuilder = getParentBuilder();
 
@@ -441,7 +441,7 @@ public final class Builders {
 		}
 
 		public T endObject() {
-			return end();
+			return super.end();
 		}
 
 		// ---------- ---------- ----------
@@ -536,7 +536,7 @@ public final class Builders {
 		}
 
 		public T endArray() {
-			return end();
+			return super.end();
 		}
 
 		// ---------- ---------- ----------

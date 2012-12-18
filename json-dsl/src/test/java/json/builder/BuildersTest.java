@@ -37,6 +37,10 @@ public class BuildersTest {
 		assertTrue(array.getValue().size() == 3);
 		assertTrue(number.equals(array.getValue().get(0).getValue()));
 		assertTrue(foo.equals(array.getValue().get(2).getValue()));
+		
+		// Adding Array
+		
+		array = jsonArray().add(number).add(vrai).add(foo).startArray().add(-7894561230L).endArray().build();
 	}
 
 	@Test
