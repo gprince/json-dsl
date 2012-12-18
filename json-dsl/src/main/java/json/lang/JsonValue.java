@@ -40,7 +40,7 @@ public interface JsonValue<T> {
      * 
      */
     interface JsonStructure<T> extends Iterable<T> {
-        
+
     }
 
     /**
@@ -230,12 +230,12 @@ public interface JsonValue<T> {
         /**
          * The immutable class of the held value
          */
-        protected final Class<? extends T> type;
+        private final Class<? extends T> type;
 
         /**
          * The immutable held value
          */
-        protected final T value;
+        private final T value;
     }
 
     /**
@@ -266,7 +266,7 @@ public interface JsonValue<T> {
          *            the value to be appended
          */
         public void add(JsonValue<?> value) {
-            this.value.add(value);
+            super.value.add(value);
         }
 
         /**
@@ -282,12 +282,13 @@ public interface JsonValue<T> {
          */
         @Override
         public Iterator<JsonValue<?>> iterator() {
-            return this.value.iterator();
+            return super.value.iterator();
         }
     }
 
     /**
-     * This class represents an immutable Builders null value of type <code>T</code>
+     * This class represents an immutable Builders null value of type
+     * <code>T</code>
      * 
      * @author gprince
      * 
@@ -614,7 +615,7 @@ public interface JsonValue<T> {
          *            the member value
          */
         public void add(java.lang.String name, JsonValue<?> value) {
-            this.value.add(new Member(name, value));
+            super.value.add(new Member(name, value));
         }
 
         /**
@@ -623,7 +624,7 @@ public interface JsonValue<T> {
          */
         @Override
         public Iterator<Member> iterator() {
-            return this.value.iterator();
+            return super.value.iterator();
         }
 
         /**
@@ -637,7 +638,7 @@ public interface JsonValue<T> {
         @Override
         public java.lang.String toString() {
             ToStringBuilder builder = new ToStringBuilder(this, new ObjectToStringStyle());
-            for (Member member : value) {
+            for (Member member : super.value) {
                 builder.append(member);
             }
             return builder.toString();
