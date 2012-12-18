@@ -42,10 +42,30 @@ public class BuildersTest {
         assertTrue(TRUE.equals(array.getValue().get(1).getValueKind()));
         assertTrue(foo.equals(array.getValue().get(2).getValue()));
         assertTrue(STRING.equals(array.getValue().get(2).getValueKind()));
+    }
 
-        // Adding Array
+    @Test
+    public void AddArrayToArrayTest() {
+        BigDecimal number = new BigDecimal(1890734.589);
+        boolean vrai = true;
+        String foo = "Foo";
+        Array array = jsonArray().add(number).add(vrai).add(foo).startArray().add(-7894561230L).endArray().build();
 
-        array = jsonArray().add(number).add(vrai).add(foo).startArray().add(-7894561230L).endArray().build();
+        // Assert
+        assertNotNull(array);
+        assertEquals(ARRAY, array.getValue().get(3).getValueKind());
+    }
+
+    @Test
+    public void AddObjectToArrayTest() {
+        BigDecimal number = new BigDecimal(1890734.589);
+        boolean vrai = true;
+        String foo = "Foo";
+        Array array = jsonArray().add(number).add(vrai).add(foo).startObject().add("long", -7894561230L).endObject().build();
+
+        // Assert
+        assertNotNull(array);
+        assertEquals(OBJECT, array.getValue().get(3).getValueKind());
     }
 
     @Test
@@ -62,18 +82,46 @@ public class BuildersTest {
         boolean vrai = true;
         String foo = "Foo";
         Object object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).build();
+
+        // Assert
         assertNotNull(object);
         assertEquals(OBJECT, object.getValueKind());
         assertTrue(object.getValue().size() == 3);
         assertTrue(number.equals(object.getValue().get(0).getValue().getValue()));
         assertTrue("number".equals(object.getValue().get(0).getName()));
-        assertTrue(NUMBER.equals(object.getValue().get(0).getValue().getValueKind()));
+        assertEquals(NUMBER, object.getValue().get(0).getValue().getValueKind());
         assertTrue((Boolean) object.getValue().get(1).getValue().getValue());
         assertTrue("vrai".equals(object.getValue().get(1).getName()));
-        assertTrue(TRUE.equals(object.getValue().get(1).getValue().getValueKind()));
+        assertEquals(TRUE, object.getValue().get(1).getValue().getValueKind());
         assertTrue(foo.equals(object.getValue().get(2).getValue().getValue()));
         assertTrue("foo".equals(object.getValue().get(2).getName()));
-        assertTrue(STRING.equals(object.getValue().get(2).getValue().getValueKind()));
+        assertEquals(STRING, object.getValue().get(2).getValue().getValueKind());
+    }
+
+    @Test
+    public void AddArrayToObjectTest() {
+        BigDecimal number = new BigDecimal(1890734.589);
+        boolean vrai = true;
+        String foo = "Foo";
+        Object object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startArray().add(-7894561230L)
+                .endArray().build();
+
+        // Assert
+        assertNotNull(object);
+        assertEquals(ARRAY, object.getValue().get(3).getValue().getValueKind());
+    }
+
+    @Test
+    public void AddObjectToObjectTest() {
+        BigDecimal number = new BigDecimal(1890734.589);
+        boolean vrai = true;
+        String foo = "Foo";
+        Object object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startObject()
+                .add("long", -7894561230L).endObject().build();
+
+        // Assert
+        assertNotNull(object);
+        assertEquals(OBJECT, object.getValue().get(3).getValue().getValueKind());
     }
 
 }
