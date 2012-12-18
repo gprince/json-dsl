@@ -1,4 +1,4 @@
-package json;
+package json.lang;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,13 +9,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * Namespace for Json values and structured types
+ * Namespace for Builders values and structured types
  * 
  * 
  * @author gprince
  * 
  * @param <T>
- *            The underlying java type binded with the Json Value
+ *            The underlying java type binded with the Builders Value
  */
 public interface JsonValue<T> {
 
@@ -239,7 +239,7 @@ public interface JsonValue<T> {
     }
 
     /**
-     * This class represents an immutable Json Array
+     * This class represents an immutable Builders Array
      * 
      * @author gprince
      * 
@@ -287,7 +287,7 @@ public interface JsonValue<T> {
     }
 
     /**
-     * This class represents an immutable Json null value of type <code>T</code>
+     * This class represents an immutable Builders null value of type <code>T</code>
      * 
      * @author gprince
      * 
@@ -302,7 +302,7 @@ public interface JsonValue<T> {
         private static final long serialVersionUID = -7170548993844138203L;
 
         /**
-         * Default constructor with the class of the held Json null value
+         * Default constructor with the class of the held Builders null value
          * 
          * @param type
          *            The class of the held null value
@@ -352,7 +352,7 @@ public interface JsonValue<T> {
     static final Null<java.lang.String> NULL_STRING = new Null<java.lang.String>(java.lang.String.class);
 
     /**
-     * This class represents an immutable Json Number value of type
+     * This class represents an immutable Builders Number value of type
      * <code>T</code>
      * 
      * @author gprince
@@ -494,7 +494,7 @@ public interface JsonValue<T> {
     }
 
     /**
-     * This class represents an immutable Member of Json Object
+     * This class represents an immutable Member of Builders Object
      * 
      * @author gprince
      */
@@ -584,7 +584,7 @@ public interface JsonValue<T> {
     }
 
     /**
-     * This class represents an immutable Json Object
+     * This class represents an immutable Builders Object
      * 
      * @author gprince
      * 
@@ -672,7 +672,7 @@ public interface JsonValue<T> {
     }
 
     /**
-     * This class represents an immutable Json String value
+     * This class represents an immutable Builders String value
      * 
      * @author gprince
      * 
@@ -713,7 +713,7 @@ public interface JsonValue<T> {
         }
 
         /**
-         * Json string delimiter
+         * Builders string delimiter
          */
         private static final java.lang.String STRING_DELIMITER = "\"";
 
