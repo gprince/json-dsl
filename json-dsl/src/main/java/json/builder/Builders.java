@@ -113,7 +113,7 @@ public final class Builders {
         private final V value;
     }
 
-    protected static abstract class RootBuilder<V extends JsonStructure<?>> extends Builder<V> implements Buildable<V> {
+    public static abstract class RootBuilder<V extends JsonStructure<?>> extends Builder<V> implements Buildable<V> {
 
         // ---------- ---------- ----------
         // PUBLIC

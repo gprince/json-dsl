@@ -20,6 +20,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public interface JsonValue<T> {
 
     /**
+     * The null value as a String
+     */
+    public static final java.lang.String NULL = "null";
+
+    /**
      * The kinds of values
      * 
      * <p>
@@ -135,11 +140,6 @@ public interface JsonValue<T> {
          * Generated serialVersionUID
          */
         private static final long serialVersionUID = 832042120875178193L;
-
-        /**
-         * The null value as a String
-         */
-        public static final java.lang.String NULL = "null";
 
         /**
          * Default constructor with the held value and class
