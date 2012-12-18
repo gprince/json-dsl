@@ -523,7 +523,7 @@ public interface JsonValue<T> {
          * 
          * @return the name of this member
          */
-        java.lang.String getName() {
+        public java.lang.String getName() {
             return name;
         }
 
@@ -532,7 +532,7 @@ public interface JsonValue<T> {
          * 
          * @return the value of this member
          */
-        JsonValue<?> getValue() {
+        public JsonValue<?> getValue() {
             return value;
         }
 
