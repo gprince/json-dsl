@@ -2,22 +2,24 @@ package json.builder;
 
 import static json.builder.Builders.jsonArray;
 import static json.builder.Builders.jsonObject;
+import static json.lang.JsonValue.ValueKind.ARRAY;
+import static json.lang.JsonValue.ValueKind.NUMBER;
+import static json.lang.JsonValue.ValueKind.OBJECT;
+import static json.lang.JsonValue.ValueKind.STRING;
+import static json.lang.JsonValue.ValueKind.TRUE;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
 import json.lang.JsonValue.Array;
 import json.lang.JsonValue.Object;
 
-import static json.lang.JsonValue.ValueKind.ARRAY;
-import static json.lang.JsonValue.ValueKind.OBJECT;
-import static json.lang.JsonValue.ValueKind.NUMBER;
-import static json.lang.JsonValue.ValueKind.STRING;
-import static json.lang.JsonValue.ValueKind.TRUE;
-
-import static org.junit.Assert.*;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
+
+import json.lang.exception.JsonBuildException;
 
 public class BuildersTest {
 
@@ -45,7 +47,7 @@ public class BuildersTest {
     }
 
     @Test
-    public void AddArrayToArrayTest() {
+    public void AddArrayToArrayTest() throws JsonBuildException {
         BigDecimal number = new BigDecimal(1890734.589);
         boolean vrai = true;
         String foo = "Foo";
@@ -57,7 +59,7 @@ public class BuildersTest {
     }
 
     @Test
-    public void AddObjectToArrayTest() {
+    public void AddObjectToArrayTest() throws JsonBuildException {
         BigDecimal number = new BigDecimal(1890734.589);
         boolean vrai = true;
         String foo = "Foo";
@@ -69,7 +71,7 @@ public class BuildersTest {
     }
 
     @Test
-    public void ObjectBuilderTest() {
+    public void ObjectBuilderTest() throws JsonBuildException {
 
         // Empty Object
         Object emptyObject = jsonObject().build();
@@ -99,7 +101,7 @@ public class BuildersTest {
     }
 
     @Test
-    public void AddArrayToObjectTest() {
+    public void AddArrayToObjectTest() throws JsonBuildException {
         BigDecimal number = new BigDecimal(1890734.589);
         boolean vrai = true;
         String foo = "Foo";
@@ -112,7 +114,7 @@ public class BuildersTest {
     }
 
     @Test
-    public void AddObjectToObjectTest() {
+    public void AddObjectToObjectTest() throws JsonBuildException {
         BigDecimal number = new BigDecimal(1890734.589);
         boolean vrai = true;
         String foo = "Foo";
@@ -124,4 +126,8 @@ public class BuildersTest {
         assertEquals(OBJECT, object.getValue().get(3).getValue().getValueKind());
     }
 
+    @Test(expected = JsonBuildException.class)
+    public void ObjectExceptionTest() throws JsonBuildException {
+        Object object = jsonObject().add(null, true).build();
+    }
 }
