@@ -578,9 +578,15 @@ public final class Builders {
 
 		@Override
 		public <C> ObjectBuilder<T> add(java.lang.String name,
-				Collection<C> value) throws JsonBuildException {
-			// TODO Auto-generated method stub
-			return null;
+				Collection<C> collection) throws JsonBuildException {
+			if (CollectionUtils.isEmpty(collection)) {
+				getValue().add(name, NULL_COLLECTION);
+			}
+
+			else {
+				getValue().add(name, JsonUtils.array(collection));
+			}
+			return this;
 		}
 	}
 

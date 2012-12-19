@@ -12,6 +12,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import json.lang.JsonValue.Array;
 import json.lang.JsonValue.Object;
@@ -182,6 +184,14 @@ public class BuildersTest {
 	}
 	
 	public static void main(String[] args) throws JsonBuildException {
+		
+		List<String> l = new ArrayList<>();
+		l.add("Toto");
+		l.add(null);
+		l.add("Titi");
+		l.add("Tata");
+		l.add("Tutu");
+		
 		Array array = jsonArray()
 				// new Array
 				.startArray()
@@ -195,6 +205,7 @@ public class BuildersTest {
 					.startArray()
 						// new Object
 						.startObject()
+							.add("col", l)
 							// new Array
 							.startArray("array")
 								.add("String")

@@ -106,6 +106,7 @@ public class JsonUtils {
 		return object.getValue().isEmpty();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static <T> Array array(Collection<T> collection) {
 
 		if (CollectionUtils.isEmpty(collection)) {
@@ -133,16 +134,24 @@ public class JsonUtils {
 					array.add(json.lang.JsonValue.FALSE);
 			}
 
-			else if (Integer.class.isInstance(object)) {
+			else if (Integer.class.isInstance(object) || Integer.TYPE.isInstance(object)) {
 				array.add(new json.lang.JsonValue.Integer((Integer) object));
 			}
 
-			else if (Long.class.isInstance(object)) {
+			else if (Long.class.isInstance(object) || Long.TYPE.isInstance(object)) {
+				array.add(new json.lang.JsonValue.Long((Long) object));
+			}
+			
+			else if (Number.class.isInstance(object)) {
 				array.add(new json.lang.JsonValue.Long((Long) object));
 			}
 
 			else if (String.class.isInstance(object)) {
 				array.add(new json.lang.JsonValue.String((String) object));
+			}
+			
+			else if (Collection.class.isInstance(object)) {
+				array.add(array((Collection) object));
 			}
 		}
 
