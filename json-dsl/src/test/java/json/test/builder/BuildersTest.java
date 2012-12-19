@@ -180,4 +180,49 @@ public class BuildersTest {
 				// then Build
 				.build();
 	}
+	
+	public static void main(String[] args) throws JsonBuildException {
+		Array array = jsonArray()
+				// new Array
+				.startArray()
+					.add("String")
+					.add(8192)
+					.add(4096.2048D)
+					.add(2888999777555666L)
+					.add((String) null)
+					.add(true)
+					// new Array
+					.startArray()
+						// new Object
+						.startObject()
+							// new Array
+							.startArray("array")
+								.add("String")
+								.add(8192)
+								.add(4096.2048D)
+								.add(2888999777555666L)
+								.add((String) null)
+								.add(true)
+							.endArray()
+							// new Object
+							.startObject("object")
+								.add("String", "String")
+								.add("Int", 8192)
+								.add("Double", 4096.2048D)
+								.add("Long", 2888999777555666L)
+								.add("Null String", (String) null)
+								.add("True", true)
+							// end Object
+							.endObject()
+						// end Object
+						.endObject()
+					// end Array
+					.endArray()
+				// end Array
+				.endArray()
+				// then Build
+				.build();
+		System.out.println(array);
+	}
+	
 }

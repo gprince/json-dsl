@@ -7,8 +7,14 @@ import static json.lang.JsonValue.NULL_DOUBLE;
 import static json.lang.JsonValue.NULL_INTEGER;
 import static json.lang.JsonValue.NULL_LONG;
 import static json.lang.JsonValue.NULL_STRING;
+import static json.lang.JsonValue.NULL_COLLECTION;
 import static json.lang.JsonValue.TRUE;
+
+import java.util.Collection;
+
+import json.lang.JsonUtils;
 import json.lang.JsonValue;
+import json.lang.JsonValue.Null;
 import json.lang.JsonValue.Array;
 import json.lang.JsonValue.BigDecimal;
 import json.lang.JsonValue.Double;
@@ -19,6 +25,7 @@ import json.lang.JsonValue.Object;
 import json.lang.JsonValue.String;
 import json.lang.exception.JsonBuildException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -45,6 +52,11 @@ public final class Builders {
 
 	}
 
+	/**
+	 * @author gprince
+	 * 
+	 * @param <B>
+	 */
 	protected interface IObjectBuilder<B extends IObjectBuilder<?>> {
 
 		B add(java.lang.String name, java.math.BigDecimal value)
@@ -65,8 +77,16 @@ public final class Builders {
 		B add(java.lang.String name, java.lang.String value)
 				throws JsonBuildException;
 
+		<T> B add(java.lang.String name, Collection<T> value)
+				throws JsonBuildException;
+
 	}
 
+	/**
+	 * @author gprince
+	 * 
+	 * @param <B>
+	 */
 	protected interface IArrayBuilder<B extends IArrayBuilder<?>> {
 
 		B add(java.math.BigDecimal value);
@@ -89,11 +109,11 @@ public final class Builders {
 		// PUBLIC
 		// ---------- ---------- ----------
 
-		public java.lang.String getName() {
+		protected java.lang.String getName() {
 			return this.name;
 		}
 
-		public V getValue() {
+		protected V getValue() {
 			return this.value;
 		}
 
@@ -161,7 +181,9 @@ public final class Builders {
 
 			if (value != null) {
 				getValue().add(name, new BigDecimal(value));
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_BIG_DECIMAL);
 			}
 			return this;
@@ -181,7 +203,9 @@ public final class Builders {
 					getValue().add(name, TRUE);
 				else
 					getValue().add(name, FALSE);
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_BOOLEAN);
 			}
 			return this;
@@ -198,7 +222,9 @@ public final class Builders {
 
 			if (value != null) {
 				getValue().add(name, new Double(value));
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_DOUBLE);
 			}
 			return this;
@@ -215,7 +241,9 @@ public final class Builders {
 
 			if (value != null) {
 				getValue().add(name, new Integer(value));
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_INTEGER);
 			}
 			return this;
@@ -232,7 +260,9 @@ public final class Builders {
 
 			if (value != null) {
 				getValue().add(name, new Long(value));
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_LONG);
 			}
 			return this;
@@ -249,9 +279,32 @@ public final class Builders {
 
 			if (value != null) {
 				getValue().add(name, new String(value));
-			} else {
+			}
+
+			else {
 				getValue().add(name, NULL_STRING);
 			}
+			return this;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <T> RootObjectBuilder add(java.lang.String name,
+				Collection<T> collection) throws JsonBuildException {
+			// Name can not be null
+			if (StringUtils.isEmpty(name)) {
+				throw new JsonBuildException(BUILD_EXCEPTION_NULL_NAME,
+						new IllegalArgumentException());
+			}
+
+			if (CollectionUtils.isEmpty(collection)) {
+				getValue().add(name, NULL_COLLECTION);
+			}
+
+			else {
+				getValue().add(name, JsonUtils.array(collection));
+			}
+
 			return this;
 		}
 
@@ -521,6 +574,13 @@ public final class Builders {
 
 		private ObjectBuilder(T parentBuilder, java.lang.String name) {
 			super(parentBuilder, name, new Object());
+		}
+
+		@Override
+		public <C> ObjectBuilder<T> add(java.lang.String name,
+				Collection<C> value) throws JsonBuildException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 
