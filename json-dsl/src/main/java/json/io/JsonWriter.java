@@ -11,9 +11,9 @@ import java.io.Writer;
 import java.math.BigDecimal;
 
 import json.lang.JsonValue;
-import json.lang.JsonValue.Array;
-import json.lang.JsonValue.Member;
-import json.lang.JsonValue.Object;
+import json.lang.JsonValue.JsonArray;
+import json.lang.JsonValue.JsonMember;
+import json.lang.JsonValue.JsonObject;
 import json.lang.exception.JsonBuildException;
 
 public class JsonWriter {
@@ -35,7 +35,7 @@ public class JsonWriter {
         this.feature = feature;
     }
 
-    public void write(Array array) throws IOException {
+    public void write(JsonArray array) throws IOException {
         startArray();
         for (JsonValue<?> value : array.getValue()) {
             write(value);
@@ -43,15 +43,15 @@ public class JsonWriter {
         endArray();
     }
 
-    public void write(Object object) throws IOException {
+    public void write(JsonObject object) throws IOException {
         startObject();
-        for (Member member : object.getValue()) {
+        for (JsonMember member : object.getValue()) {
             write(member);
         }
         endObject();
     }
 
-    private void write(Member member) throws IOException {
+    private void write(JsonMember member) throws IOException {
         startString();
         out.append(member.getName());
         endString();
@@ -62,11 +62,11 @@ public class JsonWriter {
     private void write(JsonValue<?> value) throws IOException {
         switch (value.getValueKind()) {
         case ARRAY:
-            write((Array) value);
+            write((JsonArray) value);
             break;
 
         case OBJECT:
-            write((Object) value);
+            write((JsonObject) value);
             break;
 
         case NUMBER:
@@ -125,7 +125,7 @@ public class JsonWriter {
             BigDecimal number = new BigDecimal(1890734.589);
             boolean vrai = true;
             String foo = "Foo";
-            Object object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startObject()
+            JsonObject object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startObject()
                     .add("long", -7894561230L).endObject().build();
 
             JsonWriter writer = new JsonWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
