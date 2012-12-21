@@ -3,6 +3,7 @@ package json.lang;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -316,6 +317,26 @@ public interface JsonValue<T> {
          */
         public int size() {
             return super.value.size();
+        }
+
+        /**
+         * Returns true if this JsonArray contains the specified JsonValue.
+         * 
+         * @param value
+         *            JsonValue whose presence in this list is to be tested
+         * 
+         * @return true if this JsonArray contains the specified JsonValue.
+         */
+        public boolean contains(JsonValue<?> value) {
+            return super.value.contains(value);
+        }
+
+        /**
+         * @see json.lang.JsonValue.AbstractValue#getValue()
+         */
+        @Override
+        public List<JsonValue<?>> getValue() {
+            return Collections.unmodifiableList(super.getValue());
         }
 
         /**
@@ -653,6 +674,14 @@ public interface JsonValue<T> {
          */
         public boolean contains(String name) {
             return super.value.containsKey(name);
+        }
+
+        /**
+         * @see json.lang.JsonValue.AbstractValue#getValue()
+         */
+        @Override
+        public Map<String, JsonValue<?>> getValue() {
+            return Collections.unmodifiableMap(super.getValue());
         }
 
         @Override
