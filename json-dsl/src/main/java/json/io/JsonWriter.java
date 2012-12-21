@@ -1,38 +1,25 @@
 package json.io;
 
-import static json.builder.impl.Builders.jsonArray;
-import static json.builder.impl.Builders.jsonObject;
 import static json.lang.JsonValue.NULL;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.math.BigDecimal;
 
 import json.lang.JsonValue;
 import json.lang.JsonValue.JsonArray;
-import json.lang.JsonValue.JsonMember;
 import json.lang.JsonValue.JsonObject;
-import json.lang.exception.JsonBuildException;
 
+/**
+ * @author Gregory
+ * 
+ */
 public class JsonWriter {
 
-    public static class Feature {
-
-        enum Features {
-            PRETTY_PRINT
-        };
-
-    }
-
+    /**
+     * @param out
+     */
     public JsonWriter(Writer out) {
         this.out = out;
-    }
-
-    public JsonWriter(Writer out, Feature feature) {
-        this.out = out;
-        this.feature = feature;
     }
 
     public void write(JsonArray array) throws IOException {
@@ -45,18 +32,22 @@ public class JsonWriter {
 
     public void write(JsonObject object) throws IOException {
         startObject();
-        for (JsonMember member : object.getValue()) {
-            write(member);
+        boolean first = true;
+        for (String name : object) {
+            if (!first) {
+                out.append(MEMBER_SEPARATOR);
+            }
+
+            else {
+                first = false;
+            }
+            startString();
+            out.append(name);
+            endString();
+            out.append(VALUE_SEPARATOR);
+            write(object.get(name));
         }
         endObject();
-    }
-
-    private void write(JsonMember member) throws IOException {
-        startString();
-        out.append(member.getName());
-        endString();
-        out.append(':');
-        write(member.getValue());
     }
 
     private void write(JsonValue<?> value) throws IOException {
@@ -74,7 +65,9 @@ public class JsonWriter {
             break;
 
         case STRING:
+            startString();
             out.append((String) value.getValue());
+            endString();
             break;
 
         case TRUE:
@@ -116,23 +109,18 @@ public class JsonWriter {
         out.append('}');
     }
 
-    private Feature feature;
+    /**
+     * 
+     */
+    private static final String MEMBER_SEPARATOR = ",";
 
+    /**
+     * 
+     */
+    private static final String VALUE_SEPARATOR = ":";
+
+    /**
+     * Le writer
+     */
     private Writer out;
-
-    public static void main(String[] args) {
-        try {
-            BigDecimal number = new BigDecimal(1890734.589);
-            boolean vrai = true;
-            String foo = "Foo";
-            JsonObject object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startObject()
-                    .add("long", -7894561230L).endArray().build();
-
-            JsonWriter writer = new JsonWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-            writer.write(object);
-
-        } catch (JsonBuildException | IOException e) {
-            e.printStackTrace(System.err);
-        }
-    }
 }
