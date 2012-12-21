@@ -1,7 +1,7 @@
 package json.io;
 
-import static json.builder.Builders.jsonArray;
-import static json.builder.Builders.jsonObject;
+import static json.builder.impl.Builders.jsonArray;
+import static json.builder.impl.Builders.jsonObject;
 import static json.lang.JsonValue.NULL;
 
 import java.io.BufferedWriter;
@@ -126,7 +126,7 @@ public class JsonWriter {
             boolean vrai = true;
             String foo = "Foo";
             JsonObject object = jsonObject().add("number", number).add("vrai", vrai).add("foo", foo).startObject()
-                    .add("long", -7894561230L).endObject().build();
+                    .add("long", -7894561230L).endArray().build();
 
             JsonWriter writer = new JsonWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
             writer.write(object);

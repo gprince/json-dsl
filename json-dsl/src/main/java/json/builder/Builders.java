@@ -40,14 +40,14 @@ public final class Builders {
     // ---------- ---------- ----------
 
     /**
-     * @return a Builder that aims to build a JsonObject
+     * @return a JsonStructureBuilder that aims to build a JsonObject
      */
     public static RootObjectBuilder jsonObject() {
         return new RootObjectBuilder();
     }
 
     /**
-     * @return a Builder that aims to build a JsonArray
+     * @return a JsonStructureBuilder that aims to build a JsonArray
      */
     public static RootArrayBuilder jsonArray() {
         return new RootArrayBuilder();
@@ -457,7 +457,7 @@ public final class Builders {
     }
 
     /**
-     * A abstract contract for Builders that are a children of another Builder
+     * A abstract contract for Builders that are a children of another JsonStructureBuilder
      * 
      * @author gprince
      * 
@@ -861,7 +861,7 @@ public final class Builders {
          * Private constructor
          * 
          * @param parentBuilder
-         *            The parent Builder
+         *            The parent JsonStructureBuilder
          */
         private ArrayBuilder(T parentBuilder) {
             super(parentBuilder, new JsonArray());
@@ -871,7 +871,7 @@ public final class Builders {
          * Private constructor
          * 
          * @param parentBuilder
-         *            The parent Builder
+         *            The parent JsonStructureBuilder
          * @param name
          *            The memebre name
          */
